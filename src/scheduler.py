@@ -6,10 +6,14 @@ DATA_FILE = Path("data/reminders.json")
 
 def load_reminders():
     if DATA_FILE.exists():
-        with open(DATA_FILE, "r") as f:
-            return json.load(f)
+        try:
+            with open(DATA_FILE, "r") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            return []
     else:
         return []
+
 
 def save_reminders(reminders):
     with open(DATA_FILE, "w") as f:
